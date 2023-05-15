@@ -1,0 +1,138 @@
+#################################### Нарисовать изоклины ######################################
+#функция f(x,y)
+diff <- function(x,y) { return(y^2-x) }
+
+slopefieldline <- function(x1,y1,slp,d)
+{  z = slope*(d-x1)+y1
+  return(z)
+}
+
+plot(NULL,xlim=c(-10,10),ylim=c(-10,10),ylab="", xlab="")
+
+c = seq(-3,3,1) # параметры изоклин
+x = seq(-10,10,0.2) # плотность отображения направлений по x
+
+#изоклины
+for(j in c)
+{
+  r<-x+j
+  ifelse(r > 0,curve((x+j)^(1/2), -10, 10,add=TRUE),curve(-((x+j)^(1/2)), -10, 10,add=TRUE))
+}
+
+
+################################### Поле направлений #######################################
+
+
+#функция f(x,y)
+diff <- function(x,y) { return(y^2-x) }
+
+slopefieldline <- function(x1,y1,slp,d)
+{  z = slope*(d-x1)+y1
+  return(z)
+}
+
+#сеть построения поля направлений
+x = seq(-10,10,0.5)
+y = seq(-10,10,0.5)
+
+plot(NULL,xlim=c(-10,10),ylim=c(-5,5),ylab="", xlab="")
+for(j in x)
+{
+  for(k in y)
+  {
+    slope = diff(j,k)
+    domain = seq(j-0.05,j+0.05,0.10)
+    z = slopefieldline(j,k,slope,domain)
+    arrows(domain[1],z[1],domain[2],z[2],length=0)
+  }
+}
+
+############################# Изоклины и поля направлений ################################
+
+
+
+#функция f(x,y)
+diff <- function(x,y) { return(y^2-x) }
+
+slopefieldline <- function(x1,y1,slp,d)
+{  z = slope*(d-x1)+y1
+  return(z)
+}
+
+plot(NULL,xlim=c(-5,20),ylim=c(-10,10),ylab="", xlab="")
+
+c = seq(-3,3,1) # параметры изоклин
+x = seq(-20,20,0.5) # плотность отображения направлений по x
+
+for(j in x)
+{
+  for(l in c)
+  {
+  p<-j+l
+    ifelse(p >= 0,k<-((j+l)^(1/2)),k<-(-(j+l)^(1/2)))
+    slope = diff(j,k)
+    domain = seq(j-0.07,j+0.07,0.14)
+    z = slopefieldline(j,k,slope,domain)
+    arrows(domain[1],z[1],domain[2],z[2],length=0)
+  }    
+}
+for(j in x)
+{
+  for(l in c)
+  {
+  p<-j+l
+    ifelse(p < 0,k<-((j+l)^(1/2)),k<-(-(j+l)^(1/2)))
+    slope = diff(j,k)
+    domain = seq(j-0.07,j+0.07,0.14)
+    z = slopefieldline(j,k,slope,domain)
+    arrows(domain[1],z[1],domain[2],z[2],length=0)
+  }    
+}
+
+#изоклины
+for(j in c)
+{
+  r<-x+j
+  ifelse(r > 0,curve((x+j)^(1/2), -5, 20,add=TRUE),curve(-((x+j)^(1/2)), -5, 20,add=TRUE))
+}
+
+
+
+########################## Интегальная кривая ##############################
+
+library(deSolve)
+
+#уравнение y'=y-x^2
+f <- function(x, y, params) list(y^2-x)
+
+x0<--2; y0<--16.6; #начальные условия
+x <- seq(x0, 20, length.out = 100);
+
+#решение уравнения
+df <- as.data.frame(ode(y0, x, f, parms = NULL));
+
+#построение интегральной кривой и начальных условий
+plot(NULL,xlim=c(-5,20),ylim=c(-20,5),ylab="", xlab="")
+lines(df,col="red")
+points(x0,y0)
+
+
+
+######################### Интегральные кривые ###############################
+
+library(deSolve)
+
+#уравнение y'=y-x^2
+f <- function(x, y, params) list(y^2-x)
+
+x <- seq(-2, 20, length.out = 100);
+y0sec <- seq(-16.6,-4.45,0.3)
+
+plot(NULL,xlim=c(-5,20),ylim=c(-20,5),ylab="", xlab="")
+for(y0 in y0sec)
+  {  df <- as.data.frame(ode(y0, x, f, parms = NULL));
+     lines(df,col="red")
+}
+
+
+##################### Красивые интегральные кривые ############################
